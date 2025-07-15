@@ -1,0 +1,42 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="header-content">
+    <a routerLink="/home" class="logo-link">
+      <img src="assets/logo.png" alt="Logo" class="logo">
+      <span class="app-name">Gestão Empresa</span>
+    </a>
+
+    <nav class="nav-links">
+      @for (group of mainActions; track group.label) {
+        <div class="menu-group">
+          <button mat-button [matMenuTriggerFor]="menu" class="menu-button">
+            {{ group.label }}
+            <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="header-menu">
+            @for (item of group.routes; track item.path) {
+              <button mat-menu-item [routerLink]="item.path" class="menu-item">
+                {{ item.label }}
+              </button>
+            }
+          </mat-menu>
+        </div>
+      }
+    </nav>
+
+    <div class="user-actions">
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="user-button">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #profileMenu="matMenu" class="profile-menu">
+        <button mat-menu-item routerLink="/fornecedor-produtos" class="profile-item">
+          <mat-icon>search</mat-icon>
+          <span>Consultar Produtos Forn.</span>
+        </button>
+        <button mat-menu-item (click)="logout()" class="profile-item">
+          <mat-icon>logout</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>

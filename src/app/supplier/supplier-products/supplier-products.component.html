@@ -1,0 +1,77 @@
+<mat-card class="search-card">
+  <div class="search-header">
+    <h2>Consultar Produtos por Fornecedor</h2>
+  </div>
+
+  <form [formGroup]="searchForm" (ngSubmit)="search()" class="search-form">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>CPF/CNPJ do Fornecedor</mat-label>
+      <input matInput 
+             formControlName="cpf_cnpj"
+             (input)="formatCpfCnpj($event)"
+             placeholder="000.000.000-00 ou 00.000.000/0000-00"
+             required>
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-error *ngIf="searchForm.get('cpf_cnpj')?.hasError('required')">
+        CPF/CNPJ é obrigatório
+      </mat-error>
+      <mat-error *ngIf="searchForm.get('cpf_cnpj')?.hasError('invalidCpf')">
+        CPF inválido
+      </mat-error>
+      <mat-error *ngIf="searchForm.get('cpf_cnpj')?.hasError('invalidCnpj')">
+        CNPJ inválido
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button 
+            color="primary" 
+            type="submit"
+            class="search-button"
+            [disabled]="searchForm.invalid">
+      <mat-icon>search</mat-icon>
+      Buscar
+    </button>
+  </form>
+
+  <div *ngIf="supplier" class="results-section">
+    <div class="supplier-info">
+      <h3>
+        <mat-icon>local_shipping</mat-icon>
+        Fornecedor: {{ supplier.nome_fornecedor }}
+      </h3>
+      <p class="supplier-details">
+        <span><mat-icon>email</mat-icon> {{ supplier.email_fornecedor }}</span>
+        <span><mat-icon>phone</mat-icon> {{ supplier.telefone_fornecedor }}</span>
+      </p>
+    </div>
+    
+    <div class="table-container" *ngIf="products.length > 0">
+      <table mat-table [dataSource]="products" class="results-table mat-elevation-z4">
+        <ng-container matColumnDef="nome_produto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let product">{{ product.nome_produto }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor_venda">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Preço de Venda</th>
+          <td mat-cell *matCellDef="let product" class="text-right">
+            {{ product.valor_venda | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd_produto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Estoque</th>
+          <td mat-cell *matCellDef="let product">{{ product.qtd_produto }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div *ngIf="products.length === 0 && supplier" class="no-results">
+      <mat-icon>inventory</mat-icon>
+      <p>Nenhum produto encontrado para este fornecedor</p>
+    </div>
+  </div>
+</mat-card>

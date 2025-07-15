@@ -1,0 +1,178 @@
+/* Global Styles */
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4cc9f0;
+  --success-color: #4ade80;
+  --warning-color: #fbbf24;
+  --danger-color: #f87171;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --text-primary: #2b2d42;
+  --text-secondary: #6c757d;
+  --gradient-primary: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+}
+
+html, body { 
+  height: 100%; 
+  background-color: #f5f7fa;
+}
+
+body { 
+  margin: 0; 
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Layout */
+.content {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Material Overrides */
+.mat-card {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-button, .mat-raised-button, .mat-stroked-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+}
+
+.mat-raised-button {
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3) !important;
+}
+
+/* Form Styles */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 8px !important;
+}
+
+.mat-input-element {
+  color: var(--text-primary) !important;
+}
+
+/* Validation Styles */
+.mat-form-field-invalid .mat-form-field-label {
+  color: var(--danger-color) !important;
+}
+
+.mat-form-field-invalid .mat-input-element {
+  color: var(--danger-color) !important;
+}
+
+.mat-error {
+  color: var(--danger-color) !important;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* Table Styles */
+.mat-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mat-header-cell {
+  background-color: var(--primary-color);
+  color: white !important;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.mat-row:nth-child(even) {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.mat-row:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Paginator */
+.mat-paginator {
+  background: transparent !important;
+  margin-top: 1.5rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Utility Classes */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.rounded-lg {
+  border-radius: 12px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+  
+  .mat-card {
+    margin: 0.5rem;
+  }
+}

@@ -1,0 +1,102 @@
+<mat-card class="list-card">
+  <div class="header">
+    <h2>Vendas</h2>
+    <button mat-raised-button color="primary" routerLink="/vendas/new" class="new-sale-button">
+      <mat-icon>add</mat-icon>
+      Nova Venda
+    </button>
+  </div>
+
+  <div class="filter-container">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>CPF Funcionário</mat-label>
+      <input matInput [(ngModel)]="funcionarioCpfFilter" (input)="applyFilter()"
+        placeholder="Digite o CPF do funcionário">
+      <mat-icon matSuffix>person_search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>CPF/CNPJ Cliente</mat-label>
+      <input matInput [(ngModel)]="funcionarioNomeFilter" (input)="applyFilter()"
+        placeholder="Digite o CPF/CNPJ do cliente">
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Data da Venda</mat-label>
+      <input matInput [matDatepicker]="pickerDataVenda" [(ngModel)]="dataVendaFilter"
+        (dateChange)="onDateFilterChange()" placeholder="Selecione a data" readonly>
+      <mat-datepicker-toggle matSuffix [for]="pickerDataVenda">
+        <mat-icon matSuffix>calendar_today</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerDataVenda></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="clearFilters()" class="clear-button"
+      *ngIf="funcionarioCpfFilter || funcionarioNomeFilter || dataVendaFilter">
+      <mat-icon>clear</mat-icon>
+      Limpar Filtros
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="full-table mat-elevation-z8">
+
+      <!-- Numeric column with right alignment -->
+      <ng-container matColumnDef="valor_total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+        <td mat-cell *matCellDef="let sale" class="text-right">{{ sale.valor_total | currency:'BRL':'symbol':'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="data_venda">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+        <td mat-cell *matCellDef="let sale">{{ sale.data_venda | dateFormat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nota_fiscal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nota Fiscal</th>
+        <td mat-cell *matCellDef="let sale">{{ sale.nota_fiscal }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fk_cpf_cnpj_cliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CPF/CNPJ do Cliente</th>
+        <td mat-cell *matCellDef="let sale">{{ formatCpfCnpjForDisplay(sale.cliente?.cpf_cnpj) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nome_forma_pagamento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Forma de Pagamento</th>
+        <td mat-cell *matCellDef="let sale">{{ sale.forma_pagamento?.nome_forma_pagamento }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fk_cpf_funcionario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CPF do Funcionário</th>
+        <td mat-cell *matCellDef="let sale">{{ sale.funcionario?.cpf }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Ações</th>
+        <td mat-cell *matCellDef="let sale" class="text-center">
+          <button mat-icon-button [routerLink]="['/vendas', sale.id_pedido]" matTooltip="Editar Venda" color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons 
+                   aria-label="Selecione a página de vendas">
+    </mat-paginator>
+  </div>
+
+  <div *ngIf="dataSource.data.length === 0 && originalData.length > 0" class="no-results">
+    <mat-icon>search_off</mat-icon>
+    <p>Nenhuma venda encontrada com os filtros aplicados.</p>
+  </div>
+  <div *ngIf="dataSource.data.length === 0 && originalData.length === 0" class="no-results">
+    <mat-icon>receipt</mat-icon>
+    <p>Nenhuma venda cadastrada.</p>
+  </div>
+</mat-card>

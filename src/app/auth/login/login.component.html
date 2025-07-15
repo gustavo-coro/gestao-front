@@ -1,0 +1,44 @@
+<mat-card class="login-card">
+  <div class="login-header">
+    <img src="assets/logo.png" alt="Company Logo" class="logo">
+    <h2>Acessar Sistema</h2>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" type="email" required>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+        E-mail é obrigatório
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+        E-mail inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="senha" type="password" required>
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">
+        Senha é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button 
+            color="primary" 
+            type="submit" 
+            class="login-button"
+            [disabled]="loginForm.invalid">
+      <mat-icon>login</mat-icon>
+      Entrar
+    </button>
+  </form>
+
+  <div class="login-footer">
+    <p class="redirect-text">
+      Não tem conta? <a routerLink="/register" class="redirect-link">Cadastre-se</a>
+    </p>
+  </div>
+</mat-card>

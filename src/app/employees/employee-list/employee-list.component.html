@@ -1,0 +1,96 @@
+<mat-card class="list-card">
+  <div class="header">
+    <h2>Funcionários</h2>
+    <div class="actions">
+      <button mat-raised-button color="primary" routerLink="/funcionario/new" class="new-button">
+        <mat-icon>person_add</mat-icon>
+        Novo Funcionário
+      </button>
+      <button mat-stroked-button routerLink="/home" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
+      </button>
+    </div>
+  </div>
+
+  <div class="filter-container">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Filtrar</mat-label>
+
+      <input 
+        matInput 
+        [(ngModel)]="filterValue" 
+        (input)="applyFilter()"
+        placeholder="Nome, CPF/CNPJ, Email ou Telefone"
+      >
+      <mat-icon matSuffix>search</mat-icon>
+      <button mat-icon-button matSuffix *ngIf="filterValue" (click)="clearFilter()" aria-label="Limpar filtro">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="full-table mat-elevation-z4">
+      <!-- Coluna nome -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let emp">{{ emp.nome }}</td>
+      </ng-container>
+
+      <!-- Coluna email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let emp">{{ emp.email }}</td>
+      </ng-container>
+
+      <!-- Coluna cpf -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CPF</th>
+        <td mat-cell *matCellDef="let emp">{{ emp.cpf }}</td>
+      </ng-container>
+
+      <!-- Coluna telefone -->
+      <ng-container matColumnDef="telefone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</th>
+        <td mat-cell *matCellDef="let emp">{{ emp.telefone }}</td>
+      </ng-container>
+
+      <!-- Coluna role -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cargo</th>
+        <td mat-cell *matCellDef="let emp">{{ emp.role }}</td>
+      </ng-container>
+
+      <!-- Coluna salario -->
+      <ng-container matColumnDef="salario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salário</th>
+        <td mat-cell *matCellDef="let emp" class="text-right">{{ emp.salario | currency:'BRL':'symbol':'1.2-2' }}</td>
+      </ng-container>
+
+      <!-- Coluna Ações (editar) -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Ações</th>
+        <td mat-cell *matCellDef="let emp" class="text-center">
+          <button mat-icon-button [routerLink]="['/funcionario', emp.cpf]" color="primary" matTooltip="Editar Funcionário">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="no-results" *ngIf="dataSource.filteredData.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>Nenhum funcionário encontrado</p>
+    </div>
+  </div>
+
+  <mat-paginator 
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Selecione a página de funcionários">
+  </mat-paginator>
+</mat-card>

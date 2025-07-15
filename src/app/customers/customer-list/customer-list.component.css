@@ -1,0 +1,99 @@
+/* client-list.component.css */
+.list-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(67, 97, 238, 0.1);
+}
+
+.header h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.new-button {
+  background: var(--gradient-primary);
+  color: white !important;
+  padding: 0 24px;
+  height: 44px;
+  font-weight: 500;
+}
+
+.filter-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  background: rgba(67, 97, 238, 0.05);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.filter-field {
+  flex: 1;
+}
+
+.table-container {
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 24px 0;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+.full-table {
+  width: 100%;
+}
+
+.no-results {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.no-results mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.no-results p {
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .new-button {
+    width: 100%;
+  }
+  
+  .filter-container {
+    flex-direction: column;
+  }
+  
+  .filter-field {
+    width: 100%;
+  }
+}

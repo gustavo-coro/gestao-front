@@ -1,0 +1,77 @@
+<mat-card class="form-card">
+  <div class="form-header">
+    <h2>{{ isEdit ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="accent"></mat-progress-bar>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isLoading" class="form-content">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="form.get('nome')?.hasError('required')">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>CPF/CNPJ</mat-label>
+        <input matInput formControlName="cpf_cnpj" 
+               (input)="formatCpfCnpj($event)" 
+               required>
+        <mat-icon matSuffix>fingerprint</mat-icon>
+        <mat-error *ngIf="form.get('cpf_cnpj')?.hasError('required')">
+          CPF/CNPJ é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('cpf_cnpj')?.hasError('invalidCpf')">
+          CPF inválido
+        </mat-error>
+        <mat-error *ngIf="form.get('cpf_cnpj')?.hasError('invalidCnpj')">
+          CNPJ inválido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="telefone" 
+               (input)="formatPhone($event)"
+               placeholder="(XX) XXXX-XXXX"
+               required>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error *ngIf="form.get('telefone')?.hasError('required')">
+          Telefone é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('telefone')?.hasError('pattern')">
+          Formato: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        E-mail inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="endereco">
+      <mat-icon matSuffix>location_on</mat-icon>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="submit-button">
+        <mat-icon>{{ isEdit ? 'save' : 'add' }}</mat-icon>
+        {{ isEdit ? 'Salvar' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50" color="accent"></mat-spinner>
+  </div>
+</mat-card>

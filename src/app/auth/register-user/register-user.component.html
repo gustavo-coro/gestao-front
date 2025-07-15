@@ -1,0 +1,48 @@
+<mat-card class="register-card">
+  <div class="register-header">
+    <img src="assets/logo.png" alt="Company Logo" class="logo">
+    <h2>Criar Nova Conta</h2>
+  </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" type="email" required>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+        E-mail é obrigatório
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+        Formato de e-mail inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="senha" type="password" required minlength="6">
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-hint>Mínimo 6 caracteres</mat-hint>
+      <mat-error *ngIf="registerForm.get('senha')?.hasError('required')">
+        Senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('senha')?.hasError('minlength')">
+        Senha deve ter no mínimo 6 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button 
+            color="primary" 
+            type="submit" 
+            class="register-button"
+            [disabled]="registerForm.invalid">
+      <mat-icon>person_add</mat-icon>
+      Registrar
+    </button>
+  </form>
+
+  <div class="register-footer">
+    <p class="redirect-text">
+      Já tem conta? <a routerLink="/login" class="redirect-link">Faça login</a>
+    </p>
+  </div>
+</mat-card>

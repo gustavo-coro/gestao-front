@@ -1,0 +1,85 @@
+<mat-card class="form-card">
+  <div class="form-header">
+    <h2>{{ isEdit ? 'Editar Empresa' : 'Nova Empresa' }}</h2>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-content">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome_empresa" required>
+      <mat-icon matSuffix>business</mat-icon>
+      <mat-error *ngIf="form.get('nome_empresa')?.hasError('required')">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>CNPJ</mat-label>
+      <input matInput formControlName="cnpj_empresa" 
+             (input)="formatCnpjOnInput($event)" 
+             placeholder="XX.XXX.XXX/XXXX-XX"
+             required>
+      <mat-icon matSuffix>fingerprint</mat-icon>
+      <mat-error *ngIf="form.get('cnpj_empresa')?.hasError('required')">
+        CNPJ é obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.get('cnpj_empresa')?.hasError('pattern')">
+        CNPJ inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Razão Social</mat-label>
+      <input matInput formControlName="razao_social" required>
+      <mat-icon matSuffix>description</mat-icon>
+      <mat-error *ngIf="form.get('razao_social')?.hasError('required')">
+        Razão Social é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          E-mail é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          E-mail inválido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="telefone" 
+               (input)="formatPhone($event)"
+               placeholder="(XX) XXXX-XXXX"
+               required>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error *ngIf="form.get('telefone')?.hasError('required')">
+          Telefone é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('telefone')?.hasError('pattern')">
+          Formato: (XX) XXXXX-XXXX
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="endereco" type="text" required>
+      <mat-icon matSuffix>location_on</mat-icon>
+      <mat-error *ngIf="form.get('endereco')?.hasError('required')">
+        Endereço é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" class="submit-button">
+        <mat-icon>{{ isEdit ? 'save' : 'add' }}</mat-icon>
+        {{ isEdit ? 'Salvar' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</mat-card>

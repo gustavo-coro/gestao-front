@@ -1,0 +1,73 @@
+/* register.component.css */
+.register-card {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.register-header {
+  margin-bottom: 2rem;
+}
+
+.register-header .logo {
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.register-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.register-button {
+  height: 50px;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--danger-color);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.register-footer {
+  margin-top: 2rem;
+}
+
+.redirect-text {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.redirect-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}

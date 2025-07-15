@@ -1,0 +1,153 @@
+<mat-card class="form-card">
+  <div class="form-header">
+    <h2>{{ isEdit ? 'Editar Funcionário' : 'Novo Funcionário' }}</h2>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-content">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="form.get('nome')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="cpf" 
+               (input)="formatCPF($event)"
+               placeholder="000.000.000-00"
+               required>
+        <mat-icon matSuffix>fingerprint</mat-icon>
+        <mat-error *ngIf="form.get('cpf')?.hasError('required')">
+          CPF é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('cpf')?.hasError('invalidCpf')">
+          CPF inválido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          E-mail é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Formato de e-mail inválido
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('invalidCompanyEmail')">
+          E-mail deve terminar com .com
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="telefone" 
+               (input)="formatPhone($event)"
+               placeholder="(XX) XXXX-XXXX"
+               required>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error *ngIf="form.get('telefone')?.hasError('required')">
+          Telefone é obrigatório
+        </mat-error>
+        <mat-error *ngIf="form.get('telefone')?.hasError('pattern')">
+          Formato: (XX) XXXXX-XXXX
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="endereco" required>
+      <mat-icon matSuffix>location_on</mat-icon>
+      <mat-error *ngIf="form.get('endereco')?.hasError('required')">
+        Endereço é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Contrato</mat-label>
+        <input matInput formControlName="contrato" required>
+        <mat-icon matSuffix>description</mat-icon>
+        <mat-error *ngIf="form.get('contrato')?.hasError('required')">
+          Contrato é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Cargo</mat-label>
+        <input matInput formControlName="role" required>
+        <mat-icon matSuffix>work</mat-icon>
+        <mat-error *ngIf="form.get('role')?.hasError('required')">
+          Cargo é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Data de Pagamento</mat-label>
+        <input matInput [matDatepicker]="pickerPagamento" formControlName="data_pagamento" required>
+        <mat-datepicker-toggle matSuffix [for]="pickerPagamento"></mat-datepicker-toggle>
+        <mat-datepicker #pickerPagamento></mat-datepicker>
+        <mat-error *ngIf="form.get('data_pagamento')?.hasError('pastDate')">
+          Data deve ser futura
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Data das Férias</mat-label>
+        <input matInput [matDatepicker]="pickerFerias" formControlName="data_ferias">
+        <mat-datepicker-toggle matSuffix [for]="pickerFerias"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFerias></mat-datepicker>
+        <mat-error *ngIf="form.get('data_ferias')?.hasError('futureDate')">
+          Data deve ser passada
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Salário</mat-label>
+        <input matInput formControlName="salario" 
+               type="number"
+               step="0.01"
+               min="1320"
+               required>
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error *ngIf="form.get('salario')?.hasError('min')">
+          Mínimo R$ 1.320,00
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" 
+               type="password"
+               minlength="8"
+               [required]="!isEdit">
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error *ngIf="form.get('senha')?.hasError('required')">
+          Senha é obrigatória
+        </mat-error>
+        <mat-error *ngIf="form.get('senha')?.hasError('minlength')">
+          Mínimo 8 caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="submit-button">
+        <mat-icon>{{ isEdit ? 'save' : 'person_add' }}</mat-icon>
+        {{ isEdit ? 'Salvar Alterações' : 'Cadastrar Funcionário' }}
+      </button>
+    </div>
+  </form>
+</mat-card>
